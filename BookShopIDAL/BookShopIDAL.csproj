@@ -42,7 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBaseServer.cs" />
+    <Compile Include="IUserServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BookShopMODEL\BookShopMODEL.csproj">
+      <Project>{bee00b79-bda1-4998-874d-2285a70f96fe}</Project>
+      <Name>BookShopMODEL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

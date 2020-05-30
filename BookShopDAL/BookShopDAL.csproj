@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,11 +49,16 @@
   <ItemGroup>
     <Compile Include="BaseServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookShopIDAL\BookShopIDAL.csproj">
       <Project>{e47a93cc-dad8-4ad1-bd4f-9e6d56551777}</Project>
       <Name>BookShopIDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BookShopMODEL\BookShopMODEL.csproj">
+      <Project>{bee00b79-bda1-4998-874d-2285a70f96fe}</Project>
+      <Name>BookShopMODEL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

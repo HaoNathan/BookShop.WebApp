@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BookShopMODEL;
 
 
 /*
@@ -16,12 +17,13 @@ using System.Threading.Tasks;
 
 namespace BookShopIDAL
 {
-    public interface IBaseServer<T> where T : class
+    public interface IBaseServer<T>:IDisposable where T :BookShopContext
     {
         Task<int> InsertAsync(T model);
-        Task<T> QueryAsync(int id);
         Task<int> UpdateAsync(T model);
         Task<int> DeleteAsync(T model);
+        Task<int> DeleteAsync(int no);
+        Task<T> QueryAsync(int no);
         IQueryable<T> QueryAll();
     }
 }

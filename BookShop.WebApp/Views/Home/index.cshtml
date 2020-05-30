@@ -16,7 +16,7 @@
     <form action="@Url.Action("Login","Home")" method="post" class="member_form">
         <p><label>用户名</label><input name="username" type="text" class="opt_input" /></p>
         <p><label>密&#160;&#160;&#160;&#160;码</label><input name="password" type="password" class="opt_input" /></p>
-        <p><label>验证码</label><input name="checkno" type="text" class="opt_input" /> <img src="~/Resourse/Images/checkno.gif" /></p>
+        <p><label>验证码</label><input name="checkno" type="text" class="opt_input" /> <img src="@Url.Action("GetCode","Home")" /></p>
         <p class="form_sub"><input type="checkbox" name=""  checked="checked" />  在此计算机上保留我的密码</p>
         <p class="form_sub"><input type="submit" value="登入" class="opt_sub" /><a href="#">忘记密码？</a></p>
     </form>

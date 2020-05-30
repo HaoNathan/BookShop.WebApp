@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using  BookShopIDAL;
+using BookShopMODEL;
 
 
 /*
@@ -17,32 +19,54 @@ using  BookShopIDAL;
 
 namespace BookShopDAL
 {
-    public class BaseServer<T>:IBaseServer<T> where T :class,new()
+    public class BaseServer<T>:IBaseServer<T> where T :BookShopContext,new()
     {
-        
-        public async Task<int> InsertAsync(T model)
+        private BookShopContext _context;
+        public BaseServer(BookShopContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public async Task<T> QueryAsync(int id)
+        public async Task<int> InsertAsync(T model)
         {
-            throw new NotImplementedException();
+             _context.Set<T>().Add(model);
+             return await _context.SaveChangesAsync();
         }
+
+      
 
         public async Task<int> UpdateAsync(T model)
         {
-            throw new NotImplementedException();
+            _context.Entry(model).State = EntityState.Modified;
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<int> DeleteAsync(T model)
         {
-            throw new NotImplementedException();
+            _context.Entry(model).State = EntityState.Deleted;
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<T> QueryAsync(int no)
+        {
+            return await _context.Set<T>().FindAsync(no);
         }
 
         public IQueryable<T> QueryAll()
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().AsNoTracking();
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
+
+        public async Task<int> DeleteAsync(int no)
+        {
+            var model = _context.Set<T>().FindAsync(no);
+            _context.Entry(model).State = EntityState.Deleted;
+            return await _context.SaveChangesAsync();
         }
     }
 }
