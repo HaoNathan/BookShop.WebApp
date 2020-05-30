@@ -7,7 +7,7 @@ namespace BookShopMODEL
     using System.Data.Entity.Spatial;
 
     [Table("TemporaryCart")]
-    public partial class TemporaryCart
+    public partial class TemporaryCart:BookShopContext
     {
         public int Id { get; set; }
 

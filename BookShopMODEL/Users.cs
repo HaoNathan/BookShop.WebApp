@@ -6,7 +6,7 @@ namespace BookShopMODEL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Users
+    public partial class Users:BookShopContext
     {
         public int Id { get; set; }
 
@@ -43,8 +43,8 @@ namespace BookShopMODEL
 
         public DateTime? RegisterTime { get; set; }
 
-        public virtual UserRoles UserRoles { get; set; }
+        public new virtual UserRoles UserRoles { get; set; }
 
-        public virtual UserStates UserStates { get; set; }
+        public new virtual UserStates UserStates { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace BookShopMODEL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Categories
+    public partial class Categories:BookShopContext
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Categories()
@@ -25,6 +25,6 @@ namespace BookShopMODEL
         public int? SortNum { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Books> Books { get; set; }
+        public new virtual ICollection<Books> Books { get; set; }
     }
 }
