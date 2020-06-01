@@ -7,9 +7,9 @@ namespace BookShopMODEL
 
     public partial class BookShopContext : DbContext
     {
-        public BookShopContext()
-            : base("name=BookShopContext")
+        public BookShopContext() : base("name=BookShopContext")
         {
+            
         }
 
         public virtual DbSet<BookRatings> BookRatings { get; set; }

@@ -88,9 +88,9 @@ namespace BookShopTOOL
             {
                 int intColorIndex = objRandom.Next(8);
 
-                int intFontIndex = objRandom.Next(6);
+                int intFontIndex = objRandom.Next(5);
 
-                Font objFont = new Font(strFontList[intFontIndex], 12, FontStyle.Bold);
+                Font objFont = new Font(strFontList[intFontIndex], 10, FontStyle.Bold);
 
                 //画刷
                 Brush objBrush = new SolidBrush(objColorList[intColorIndex]);

@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BookShopDAL;
+using BookShopIBLL;
+using BookShopIDAL;
+using BookShopMODEL;
 
 
 /*
@@ -16,7 +21,23 @@ using System.Threading.Tasks;
 
 namespace BookShopBLL
 {
-    public class UserManager
+    public class UserManager:IUserManager
     {
+        public  async Task<bool> Login(string userName, string userPwd)
+        {
+            using (IUserServer userServer=new UserServer())
+            {
+                return await userServer.QueryAll().AnyAsync(m => m.LoginId == userName && m.LoginPwd == userPwd);
+            }
+        }
+
+        public async Task<int> Register(Users user)
+        {
+
+            using (IUserServer userServer=new UserServer())
+            {
+                return await userServer.InsertAsync(user);
+            }
+        }
     }
 }

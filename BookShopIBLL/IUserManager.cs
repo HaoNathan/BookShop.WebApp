@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-
+using BookShopMODEL;
 /*
  *类名称：UserManager
  *类描述：
@@ -18,5 +17,7 @@ namespace BookShopIBLL
 {
     public interface IUserManager
     {
+        Task<bool>  Login(string userName,string userPwd);
+        Task<int> Register(Users user);
     }
 }

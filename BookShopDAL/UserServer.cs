@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookShopMODEL;
-
+using BookShopIDAL;
 
 /*
  *类名称：UserServer
@@ -17,7 +17,7 @@ using BookShopMODEL;
 
 namespace BookShopDAL
 {
-    public class UserServer : BaseServer<BookShopMODEL.Users>
+    public class UserServer : BaseServer<Users>,IUserServer
     {
         public UserServer() : base(new BookShopContext())
         {

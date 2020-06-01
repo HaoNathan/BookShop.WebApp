@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model BookShop.WebApp.Models.LoginViewModels
+@section cssLink
+{
+    <link href="~/Resourse/CSS/member.css" rel="stylesheet" type="text/css" />
+
+}
+
+<div id="action_area">
+    <h2 class="action_type"><img src="~/Resourse/Images/login_in.gif" alt="会员登录" /></h2>
+    <p class="state">欢迎光临第三波书店网站，本站为淘宝网旗下专业在线书店！<br />您可以使用第三波书店的用户名，直接登录。</p>
+    <form action="@Url.Action("Login","Home")" method="post" class="member_form">
+        <p><label>用户名</label><input name="UserName" type="text" class="opt_input" />@Html.ValidationMessageFor(m=>m.UserName) </p>
+        <p><label>密&#160;&#160;&#160;&#160;码</label><input name="UserPwd" type="password" class="opt_input" />@Html.ValidationMessageFor(m => m.UserPwd)  </p>
+        <p><label>验证码</label><input name="Captcha" type="text" class="opt_input" /> <img src="@Url.Action("GetCode","Home")" /> @Html.ValidationMessageFor(m => m.Captcha) </p>
+        <p class="form_sub"><input type="checkbox" name="isRemenber"  checked="checked" />  在此计算机上保留我的密码</p>
+        <p class="form_sub"><input type="submit" value="登入" class="opt_sub" /><a href="#">忘记密码？</a></p>
+    </form>
+</div>
+
+

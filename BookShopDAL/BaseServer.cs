@@ -21,7 +21,7 @@ namespace BookShopDAL
 {
     public class BaseServer<T>:IBaseServer<T> where T :BookShopContext,new()
     {
-        private BookShopContext _context;
+        private readonly BookShopContext _context;
         public BaseServer(BookShopContext context)
         {
             _context = context;

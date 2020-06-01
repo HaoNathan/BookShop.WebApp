@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+@model BookShop.WebApp.Models.UserViewModels.RegisterViewModels
+@section cssLink
+{
+    <link href="~/Resourse/CSS/member.css" rel="stylesheet" type="text/css" />
+
+}
+<div id="action_area">
+    <h2 class="action_type"><img src="~/Resourse/Images/register.gif" alt="会员注册" /></h2>
+    <form action="@Url.Action("Register","Home")" method="post" class="member_form" id="Inertform" onsubmit="return register()">
+        <p><label><span>*</span>用户名</label><input name="UserName" type="text" class="opt_input" />5-12个字符或数字组成，可用中文名</p>@Html.ValidationMessageFor(m => m.UserName)
+        <p><label><span>*</span>用户姓名</label><input name="Name" type="text" class="opt_input" /></p>@Html.ValidationMessageFor(m => m.Name)
+        <p><label><span>*</span>密&#160;&#160;&#160;&#160;码</label><input name="UserPwd" type="password" class="opt_input" />请输入密码</p>@Html.ValidationMessageFor(m => m.UserPwd)
+        <p><label><span>*</span>确认密码</label><input name="ConfirmPwd" type="password" class="opt_input" />请再次输入密码</p>@Html.ValidationMessageFor(m => m.ConfirmPwd)
+        <p><label><span>*</span>电子邮件</label><input name="Email" type="email" class="opt_input" />请输入电子邮件</p>@Html.ValidationMessageFor(m => m.Email)
+        <p><label><span>*</span>地址</label><input name="Adress" type="text" class="opt_input" />请输入地址</p>@Html.ValidationMessageFor(m => m.Adress)
+        <p><label><span>*</span>电话</label><input name="Phone" type="text" class="opt_input" />请输入电话</p>@Html.ValidationMessageFor(m => m.Phone)
+        <p><label><span>*</span>验证码</label><input name="Captcha" type="text" class="opt_input" style="width:60px;" /><img src="~/Resourse/Images/checkno.gif" /> 请输入验证码</p>@Html.ValidationMessageFor(m => m.Captcha)
+        <p class="form_sub"><input type="checkbox" name="" checked="checked" />  在此计算机上保留我的密码</p>
+        <p class="form_sub"><input type="submit" value="确定了，马上提交" class="opt_sub" /></p>
+        <p class="form_sub">加<span>*</span>的为必填项目</p>
+        <p class="form_sub">><a href="/Views/Home/index.cshtml">已经有账号，马上登录</a><br />>如果你已经有“第三波书店”社区账号，请<a href="javascript:alert('书店社区暂未开通');">点这里</a>登录升级</p>
+    </form>
+</div>
+<script>
+    function register() {
+        $.ajax({
+            url: @Url.Action("Register", "Home"),
+            type: post,
+            data: $("#Inertform").serialize()
+
+        }.done((data) => {
+                
+                alert(data);
+            }
+        ));
+        return false;
+    }
+    
+</script>

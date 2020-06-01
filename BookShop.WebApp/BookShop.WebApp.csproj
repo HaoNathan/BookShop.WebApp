@@ -255,8 +255,10 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\CategoryList.cshtml" />
     <Content Include="Views\Home\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +281,10 @@
     <ProjectReference Include="..\BookShopBLL\BookShopBLL.csproj">
       <Project>{06a1b134-f44b-4a20-bf23-c86e44dbe608}</Project>
       <Name>BookShopBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BookShopMODEL\BookShopMODEL.csproj">
+      <Project>{bee00b79-bda1-4998-874d-2285a70f96fe}</Project>
+      <Name>BookShopMODEL</Name>
     </ProjectReference>
     <ProjectReference Include="..\BookShopTOOL\BookShopTOOL.csproj">
       <Project>{34efb4ad-3f5c-44e6-8113-691803224983}</Project>

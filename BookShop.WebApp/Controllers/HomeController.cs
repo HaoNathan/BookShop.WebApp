@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BookShop.WebApp.Models;
+using BookShop.WebApp.Models.UserViewModels;
+using BookShopBLL;
+using BookShopMODEL;
 using  BookShopTOOL;
 
 namespace BookShop.WebApp.Controllers
@@ -16,33 +20,39 @@ namespace BookShop.WebApp.Controllers
         {
             return View();
         }
-
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
         [HttpPost]
-        public ActionResult Login(LoginViewModels models)
+        public async Task<ActionResult> Login(LoginViewModels models, string isRemenber)
         {
             if (ModelState.IsValid)
             {
-                return View("About");
+                if (await new UserManager().Login(models.UserName, models.UserPwd))
+                {
+                    Session["UserName"] = models.UserName;
+                    return RedirectToAction("index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("LoginError", "账号或密码错误");
+                    return View("index", models);
+                }
             }
             else
             {
-                return View("index",models);
+                return View("index", models);
             }
-
         }
 
-        [Filter.BookShopAuth]
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
 
         public ActionResult GetCode()
         {
             string strImageCode = string.Empty;
-            byte[] codeImage= PublicHelper.GetImageCode(out strImageCode);
+            byte[] codeImage = PublicHelper.GetImageCode(out strImageCode);
 
             return File(codeImage, "image/jpeg");
         }
@@ -52,6 +62,41 @@ namespace BookShop.WebApp.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Register(RegisterViewModels models)
+        {
+            if (ModelState.IsValid)
+            {
+                int result = await new UserManager().Register(new Users()
+                {
+                    LoginId = models.UserName,
+                    Name = models.Name,
+                    LoginPwd = models.UserPwd,
+                    Address = models.Adress,
+                    Phone = models.Phone,
+                    Mail = models.Email,
+                    UserRoleId = 1,
+                    UserStateId = 1
+                });
+                if (result != 1)
+                {
+                    return Content("False");
+                }
+
+                return Content("Success");
+            }
+
+
+            return View("Register", models);
+
         }
     }
 }

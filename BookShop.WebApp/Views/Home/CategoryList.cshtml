@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -7,24 +8,24 @@
     <title>"第三波书店"-网上书店</title>
     <link href="~/Resourse/CSS/global.css" rel="stylesheet" type="text/css" />
     <link href="~/Resourse/CSS/Index.css" rel="stylesheet" type="text/css" />
-    @RenderSection("cssLink",false)
+    @RenderSection("cssLink", false)
 </head>
 
 <body>
     <div id="top">
         <div class="status">
 
-            @if (Session["UserName"]!=null)
+            @if (Session["UserName"] != null)
             {
                 <span>  您好，欢迎来到第三波书店 ^ _ ^  </span>
             }
             else
             {
-                <p>您好，欢迎来到第三波书店 ^ _ ^    <a href = "@Url.Action("Login","Home")" >【登录】</a >  <a href = "@Url.Action("Register","Home")" >【免费注册】</a > </p>
+                <p>您好，欢迎来到第三波书店 ^ _ ^    <a href="@Url.Action("","Home")">【登录】</a>  <a href="#">【免费注册】</a> </p>
             }
         </div>
         <div class="member">
-            
+
             <ul>
                 <li><a href="#"><img src="/Resourse/Images/payVIP.gif" height="18" alt="开通VIP" /></a></li>
                 <li><a href="#"><img src="~/Resourse/Images/payCoin.gif" height="18" alt="学币中心" /></a></li>
@@ -38,8 +39,8 @@
             <div id="a_b_01"><img src="~/Resourse/Images/a_b_01.gif" />[<img src="~/Resourse/Images/taobao.gif" /> <a href="#">分站</a>]</div>
             <ul id="mainnav">
                 <li class="current"><a href="index.html">首页</a></li>
-                <li><a href="login.html">登录</a></li>
-                <li><a href="register.html">注册</a></li>
+                <li><a href="@Url.Action("index","Home")">登录</a></li>
+                <li><a href="@Url.Action("Register","Home")">注册</a></li>
                 <li><a href="#">商讯</a></li>
                 <li><a href="#">购物流程</a></li>
                 <li><a href="#">在线客服</a></li>
@@ -64,25 +65,10 @@
                 <h1 class="all_type black"><a href="#">查看所有分类>></a></h1>
                 <div id="subnav">
                     <ul class="black">
-                        <li><a href="#">VIP中心</a></li>
-                        <li><a href="#">新品上架</a></li>
-                        <li><a href="#">新书热卖</a></li>
-                        <li><a href="#">畅销排行</a></li>
-                        <li><a href="#">商务英语</a></li>
-                        <li><a href="#">英语口译</a></li>
-                        <li><a href="#">日语考试</a></li>
-                        <li><a href="#">实用日语</a></li>
-                        <li><a href="#">英语考试</a></li>
-                        <li><a href="#">实用英语</a></li>
-                        <li><a href="#">出国留学</a></li>
-                        <li><a href="#">英文原版</a></li>
-                        <li><a href="#">考研图书</a></li>
-                        <li><a href="#">所有图书</a></li>
-                        <li><a href="#">在线读书</a></li>
-                        <li><a href="#">电子词典</a></li>
-                        <li><a href="#">计算机类</a></li>
-                        <li><a href="#">科普读物</a></li>
-                        <li><a href="#">建筑门类</a></li>
+                        @foreach (var item in ViewBag.list)
+                        {
+
+                        }
                     </ul>
                 </div>
                 <!--subnav end-->
@@ -131,9 +117,9 @@
     <div id="child_site">
         <strong>分站</strong>　 <a href="#" target="_blank">沪江网</a>  <a href="#" target="_blank">听说</a>  <a href="#" target="_blank">口译</a>  <a href="#" target="_blank">CET</a>  <a href="#" target="_blank">考研</a>  <a href="#" target="_blank">雅思</a>  <a href="#" target="_blank">托福</a>  <a href="#" target="_blank">日语</a>  <a href="#" target="_blank">法语</a>  <a href="#" target="_blank">下载</a>  <a href="#" target="_blank">文库</a>  <a href="#" target="_blank">部落</a>  <a href="#" target="_blank">博客</a>  <a href="#" target="_blank">词典</a>  <a href="#" target="_blank">IT新闻</a>  <a href="#" target="_blank">博客园</a>  <a title="新世界日语" href="#" target="_blank">新世界日语</a>  <a title="2010考研书籍推荐专题" href="#" target="_blank">2010考研书籍</a>
     </div>
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>
