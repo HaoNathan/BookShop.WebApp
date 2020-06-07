@@ -7,7 +7,7 @@ namespace BookShopMODEL
     using System.Data.Entity.Spatial;
 
     [Table("OrderBook")]
-    public partial class OrderBook:BookShopContext
+    public partial class OrderBook:BaseEntity
     {
         public int Id { get; set; }
 
@@ -20,8 +20,8 @@ namespace BookShopMODEL
         [Column(TypeName = "money")]
         public decimal UnitPrice { get; set; }
 
-        public new virtual Books Books { get; set; }
+        public  virtual Books Books { get; set; }
 
-        public new virtual Orders Orders { get; set; }
+        public  virtual Orders Orders { get; set; }
     }
 }

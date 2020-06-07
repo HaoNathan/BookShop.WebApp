@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseEntity.cs" />
     <Compile Include="BookRatings.cs" />
     <Compile Include="Books.cs" />
     <Compile Include="BookShopContext.cs" />

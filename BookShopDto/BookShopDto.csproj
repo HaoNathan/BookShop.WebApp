@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C7DDAAE6-AF10-4672-8F7E-3127D53C8913}</ProjectGuid>
+    <ProjectGuid>{340B03D7-5EEA-4375-9ED3-615183BCE2CA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BookShopIBLL</RootNamespace>
-    <AssemblyName>BookShopIBLL</AssemblyName>
+    <RootNamespace>BookShopDto</RootNamespace>
+    <AssemblyName>BookShopDto</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,24 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IBookCategoryManager.cs" />
-    <Compile Include="IBookManager.cs" />
+    <Compile Include="BooksDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IUserManager.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BookShopDAL\BookShopDAL.csproj">
-      <Project>{82d2b7b9-d4fc-475b-bb27-9fa7528640f6}</Project>
-      <Name>BookShopDAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BookShopDto\BookShopDto.csproj">
-      <Project>{340b03d7-5eea-4375-9ed3-615183bce2ca}</Project>
-      <Name>BookShopDto</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BookShopMODEL\BookShopMODEL.csproj">
-      <Project>{bee00b79-bda1-4998-874d-2285a70f96fe}</Project>
-      <Name>BookShopMODEL</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

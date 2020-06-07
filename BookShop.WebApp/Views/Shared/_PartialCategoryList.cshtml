@@ -1,0 +1,13 @@
+﻿@model List<BookShop.WebApp.Models.BookViewModels.BookCategoryViewModels>
+
+<div id="subnav">
+    <ul class="black">
+        @foreach (var item in Model)
+        {
+            <li>
+                @Html.ActionLink(item.CategoryName, "CategoryList", "Book", new { id = item.CategoryNo },new{})
+            </li>
+        }
+    </ul>
+</div>
+

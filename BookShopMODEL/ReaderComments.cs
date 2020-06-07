@@ -6,7 +6,7 @@ namespace BookShopMODEL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class ReaderComments:BookShopContext
+    public partial class ReaderComments:BaseEntity
     {
         public int Id { get; set; }
 
@@ -26,6 +26,6 @@ namespace BookShopMODEL
 
         public DateTime Date { get; set; }
 
-        public new virtual Books Books { get; set; }
+        public  virtual Books Books { get; set; }
     }
 }

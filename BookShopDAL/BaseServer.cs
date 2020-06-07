@@ -19,7 +19,7 @@ using BookShopMODEL;
 
 namespace BookShopDAL
 {
-    public class BaseServer<T>:IBaseServer<T> where T :BookShopContext,new()
+    public class BaseServer<T>:IBaseServer<T> where T :BaseEntity,new()
     {
         private readonly BookShopContext _context;
         public BaseServer(BookShopContext context)

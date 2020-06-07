@@ -6,7 +6,7 @@ namespace BookShopMODEL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class SearchKeywords:BookShopContext
+    public partial class SearchKeywords:BaseEntity
     {
         public int Id { get; set; }
 

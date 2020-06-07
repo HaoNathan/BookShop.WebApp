@@ -127,11 +127,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filter\BookShopAuthAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BookViewModels\BookCategoryViewModels.cs" />
+    <Compile Include="Models\BookViewModels\BookViewModels.cs" />
     <Compile Include="Models\UserViewModels\LoginViewModels.cs" />
     <Compile Include="Models\UserViewModels\RegisterViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -258,8 +261,9 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\CategoryList.cshtml" />
     <Content Include="Views\Home\index.cshtml" />
+    <Content Include="Views\Book\CategoryList.cshtml" />
+    <Content Include="Views\Shared\_PartialCategoryList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -281,6 +285,10 @@
     <ProjectReference Include="..\BookShopBLL\BookShopBLL.csproj">
       <Project>{06a1b134-f44b-4a20-bf23-c86e44dbe608}</Project>
       <Name>BookShopBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BookShopDto\BookShopDto.csproj">
+      <Project>{340B03D7-5EEA-4375-9ED3-615183BCE2CA}</Project>
+      <Name>BookShopDto</Name>
     </ProjectReference>
     <ProjectReference Include="..\BookShopMODEL\BookShopMODEL.csproj">
       <Project>{bee00b79-bda1-4998-874d-2285a70f96fe}</Project>

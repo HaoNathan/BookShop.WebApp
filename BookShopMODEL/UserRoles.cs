@@ -6,7 +6,7 @@ namespace BookShopMODEL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class UserRoles:BookShopContext
+    public partial class UserRoles:BaseEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserRoles()
@@ -24,6 +24,6 @@ namespace BookShopMODEL
         public int? Score { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public new virtual ICollection<Users> Users { get; set; }
+        public  virtual ICollection<Users> Users { get; set; }
     }
 }

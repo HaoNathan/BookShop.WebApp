@@ -17,7 +17,7 @@ using BookShopMODEL;
 
 namespace BookShopIDAL
 {
-    public interface IBaseServer<T>:IDisposable where T :BookShopContext
+    public interface IBaseServer<T>:IDisposable where T :BaseEntity
     {
         Task<int> InsertAsync(T model);
         Task<int> UpdateAsync(T model);

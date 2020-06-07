@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookCategoryManager.cs" />
+    <Compile Include="BookManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserManager.cs" />
   </ItemGroup>
@@ -54,6 +56,10 @@
     <ProjectReference Include="..\BookShopDAL\BookShopDAL.csproj">
       <Project>{82d2b7b9-d4fc-475b-bb27-9fa7528640f6}</Project>
       <Name>BookShopDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BookShopDto\BookShopDto.csproj">
+      <Project>{340b03d7-5eea-4375-9ed3-615183bce2ca}</Project>
+      <Name>BookShopDto</Name>
     </ProjectReference>
     <ProjectReference Include="..\BookShopIBLL\BookShopIBLL.csproj">
       <Project>{c7ddaae6-af10-4672-8f7e-3127d53c8913}</Project>

@@ -6,7 +6,7 @@ namespace BookShopMODEL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Orders:BookShopContext
+    public partial class Orders:BaseEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Orders()
@@ -36,6 +36,6 @@ namespace BookShopMODEL
         public string PayStyle { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public new virtual ICollection<OrderBook> OrderBook { get; set; }
+        public  virtual ICollection<OrderBook> OrderBook { get; set; }
     }
 }

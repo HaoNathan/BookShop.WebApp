@@ -6,7 +6,7 @@ namespace BookShopMODEL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class RecomBooks:BookShopContext
+    public partial class RecomBooks:BaseEntity
     {
         [Key]
         [Column(Order = 0)]

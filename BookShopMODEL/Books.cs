@@ -6,7 +6,7 @@ namespace BookShopMODEL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Books:BookShopContext
+    public partial class Books:BaseEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Books()
@@ -44,14 +44,14 @@ namespace BookShopMODEL
 
         public int Clicks { get; set; }
 
-        public new  virtual Categories Categories { get; set; }
+        public   virtual Categories Categories { get; set; }
 
-        public new virtual Publishers Publishers { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public new virtual ICollection<OrderBook> OrderBook { get; set; }
+        public  virtual Publishers Publishers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public new  virtual ICollection<ReaderComments> ReaderComments { get; set; }
+        public  virtual ICollection<OrderBook> OrderBook { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public   virtual ICollection<ReaderComments> ReaderComments { get; set; }
     }
 }
