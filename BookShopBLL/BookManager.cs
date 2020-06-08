@@ -23,24 +23,28 @@ namespace BookShopBLL
 {
     public class BookManager:IBookManager
     {
+        private IBookServer _server;
+
+        public BookManager(IBookServer server)
+        {
+            _server = server;
+        }
         public async Task<List<Books>> GetAllBook()
         {
-            using (IBookServer server=new BookServer())
-            {
-                return await server.QueryAll().ToListAsync();
-            }
+           
+                return await _server.QueryAll().ToListAsync();
+            
         }
 
         public async Task<List<BooksDto>> QueryBooks(string name)
         {
-            using (IBookServer server = new BookServer())
-            {
-                return await server.QueryAll().Where(m=>m.Title.Contains(name)).Select(m=>new BooksDto()
+            
+                return await _server.QueryAll().Where(m=>m.Title.Contains(name)).Select(m=>new BooksDto()
                 {
                     BookName = m.Title
 
                 }).ToListAsync();
-            }
+            
         }
     }
 }

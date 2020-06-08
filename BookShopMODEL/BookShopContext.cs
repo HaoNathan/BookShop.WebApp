@@ -12,7 +12,6 @@ namespace BookShopMODEL
     {
         public BookShopContext() : base("name=BookShopContext")
         {
-            Database.SetInitializer<BookShopContext>(new MigrateDatabaseToLatestVersion<BookShopContext,ReportingDbMigrationsConfiguration>());
         }
 
         public virtual DbSet<BookRatings> BookRatings { get; set; }
@@ -28,14 +27,7 @@ namespace BookShopMODEL
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserStates> UserStates { get; set; }
         public virtual DbSet<RecomBooks> RecomBooks { get; set; }
-         internal sealed class ReportingDbMigrationsConfiguration : DbMigrationsConfiguration<BookShopContext>
-        {
-            public ReportingDbMigrationsConfiguration()
-            {
-                AutomaticMigrationsEnabled = true;//任何Model Class的修改將會直接更新DB
-                AutomaticMigrationDataLossAllowed = true;
-            }
-        }
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

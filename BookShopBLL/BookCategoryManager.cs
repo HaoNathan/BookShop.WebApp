@@ -23,6 +23,12 @@ namespace BookShopBLL
 {
     public class BookCategoryManager: IBookCategoryManager
     {
+        private IBookCategoryServer _server;
+
+        public BookCategoryManager(IBookCategoryServer server)
+        {
+            _server = server;
+        }
         public  List<Categories> GetAllCategory()
         {
             using (IBookCategoryServer server = new BookCategoryServer())
@@ -30,5 +36,6 @@ namespace BookShopBLL
                 return server.QueryAll().ToList();
             }
         }
+
     }
 }

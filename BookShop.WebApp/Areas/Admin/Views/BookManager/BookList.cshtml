@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "BookList";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutMain.cshtml";
+}
+
+<h2>书籍列表</h2>
+<table id="BookTable" lay-filter="test"></table>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+  
+        //第一个实例
+        table.render({
+            elem: '#BookTable'
+            ,height: 312
+            ,url: '@Html.Action("BookList","BookManager")' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
+                ,{field: 'Title', title: '书名', width:80}
+                , { field: 'Author', title: '作者', width:80, sort: true}
+                , { field: 'PublisherId', title: '上架编号', width:80} 
+                , { field: 'PublishDate', title: '上架时间', width: 177}
+                , { field: 'ISBN', title: 'ISBN编号', width: 80, sort: true}
+                , { field: 'UnitPrice', title: '定价', width: 80, sort: true}
+                , { field: 'ContentDescription', title: '描述', width: 80}
+                , { field: 'TOC', title: '书籍目录', width: 135, sort: true }
+                , { field: 'CategoryId', title: '类别', width: 135, sort: true }
+                , { field: 'Clicks', title: '点击次数', width: 135, sort: true }
+
+            ]]
+        });
+  
+    });
+</script>

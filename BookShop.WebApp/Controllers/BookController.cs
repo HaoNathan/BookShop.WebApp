@@ -6,28 +6,24 @@ using System.Web;
 using System.Web.Mvc;
 using BookShop.WebApp.Models.BookViewModels;
 using BookShopBLL;
+using BookShopIBLL;
 
 namespace BookShop.WebApp.Controllers
 {
     public class BookController : Controller
     {
-        // GET: Book
-        [HttpGet]
-        public  ActionResult  CategoryList()
-        {
-            var list =new BookCategoryManager().GetAllCategory().Select(m =>
-                new BookCategoryViewModels()
-                {
-                    CategoryNo = m.Id,
-                    CategoryName = m.Name
-                }).ToList();
+        private IBookManager _manager;
 
-            return PartialView("_partialCategoryList",list);
+        public BookController(IBookManager manager)
+        {
+            _manager = manager;
         }
+        // GET: Book
+       
         [HttpPost]
         public async Task< ActionResult> SearchBook(string name)
         {
-            var list=await new BookManager().QueryBooks(name);
+            var list=await _manager.QueryBooks(name);
             return Json(list);
         }
     }
