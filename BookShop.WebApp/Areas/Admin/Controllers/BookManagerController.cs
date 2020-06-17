@@ -9,6 +9,7 @@ namespace BookShop.WebApp.Areas.Admin.Controllers
     public class BookManagerController : Controller
     {
         // GET: Admin/BookManager
+        [HttpGet]
         public ActionResult BookList()
         {
             

@@ -4,5 +4,6 @@ namespace BookShopMODEL
 {
     public class BaseEntity
     {
+        
     }
 }

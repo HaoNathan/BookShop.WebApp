@@ -9,9 +9,9 @@ namespace BookShop.WebApp.Areas.Admin.Controllers
     public class UserManagerController : Controller
     {
         // GET: Admin/UserManager
-        public ActionResult Index()
+        public ActionResult UserList()
         {
-            return View("UserList");
+            return View();
         }
     }
 }

@@ -6,13 +6,13 @@ using System.Web.Mvc;
 
 namespace BookShop.WebApp.Areas.Admin.Controllers
 {
-    public class HomeController : Controller
+    public class MainController : Controller
     {
-        // GET: Admin/Home
-        public ActionResult Index()
+        // GET: Admin/Main
+       
+        public ActionResult Main()
         {
             return View();
         }
-       
     }
 }

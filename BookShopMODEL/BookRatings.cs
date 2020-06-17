@@ -19,5 +19,6 @@ namespace BookShopMODEL
         public string Comment { get; set; }
 
         public DateTime CreatedTime { get; set; }
+        public bool IsRemove { get; set; }
     }
 }
