@@ -1,0 +1,144 @@
+@{
+    var itemList = new List<SelectListItem>()
+    {
+        new SelectListItem() {Text="S1",Value="1" },
+        new SelectListItem() {Text="S2",Value="2" },
+        new SelectListItem() {Text="Y2",Value="3" }
+    };
+}
+ @using (Html.BeginForm("Index", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	<input type="file" name="file" />
+	<textarea name="article" cols="60" rows="10"></textarea>
+
+	@Html.DropDownList("gradeName", itemList, "--请选择--");
+	@Html.DropDownList("pubName", (SelectList)ViewBag.itemList , "--请选择--");
+
+
+	<input type="submit" value="上传" />
+}
+
+public ActionResult Index()
+{
+	//从数据库中读取出所有的出版社内容 绑定上去
+	List<Publishers> publisherList = new PublisherBLL().GetPublishers();
+	SelectList itemList = new SelectList(publisherList,"id","name");
+	ViewBag.itemList = itemList;
+	return View();
+}
+
+// GET: File
+[ValidateInput(false)] //不验证传过来的数据
+[HttpPost]   //点击提交按钮访问
+public ActionResult Index(HttpPostedFileBase file,string article)
+{
+	string art = article;
+	if(file!=null)
+	{
+		//上传
+		string fileName = Server.MapPath("~/Images/BookCovers/") + file.FileName;
+		//保存下来
+		file.SaveAs(fileName);
+		return Content("<script>alert('上传成功');location.href='/Home/Index';</script>");
+	}
+	return View();
+}
+
+
+MVC中的AJAX:
+	AJAX:前后端交互的一种方式
+		XmlHttpRequest
+	JQ:
+		$.ajax()
+		$.post()
+	后台:
+		.ashx 一般处理程序 获取数据 返回 json格式数据
+		
+	JQ处理:
+		json字符串---->json对象  
+		
+MVC中:
+	数据提交给控制器中的动作方法
+	
+	步骤:
+		①前端:
+		 $.post("@Url.Action("动作方法", "控制器")", { "数据": 值 }, function (data) {
+            //返回数据的操作         
+        });
+		
+		②后台:
+			 return Json(对象);  //返回将对象转换成json对象给前端
+		③前端根据返回结果做操作:
+			拼接字符串 修改DOM
+MVC中提供的自动生成表单提交的AJAX:
+	Ajax.BeginForm();  //自动生成一个可以用ajax提交和返回的表单
+		
+	Ajax.BeginForm("动作方法", "控制器", new AjaxOptions { Confirm = "确认提交吗?", UpdateTargetId = "提交之后显示数据的元素" }, new { @class = "member_form" })
+
+ public ActionResult GetBookByName(string bookName)
+        {
+            //根据书名模糊查询图书信息
+            List<Books> bookList = new BookBLL().GetBooks("书名", bookName);
+            //把数据返回给前端
+            //JavaScriptSerializer jss = new JavaScriptSerializer();
+            //jss.Serialize(bookList);
+            return Json(bookList);
+           
+        }
+
+	
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BookSearch</title>
+    <style>
+        #main{
+            border:1px solid red;
+            width:800px;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script>
+        $(function () {
+            $("#btn").click(function () {
+                var bookName = $("input[name='bookName']").eq(0).val();
+                $.post("@Url.Action("GetBookByName", "Books")", { "bookName": bookName }, function (data) {
+                    var str = "<table><tr><th>书籍ISBN</th><th>书籍名称ISBN</th><th>书籍价格</th><th>书籍作者</th><th>书籍出版日期</th></tr>";
+                    $(data).each(function (index) {
+                        str += "<tr>";
+                        str += "<td>" + data[index].ISBN + "</td>"
+                        str += "<td>" + data[index].Title + "</td>"
+                        str += "<td>" + data[index].UnitPrice + "</td>"
+                        str += "<td>" + data[index].Author + "</td>"
+                        str += "<td>" + data[index].PublishDate + "</td>"
+                        str += "</tr>";
+                    });
+                    str += "</table>";
+                    $("#main").html(str);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div> 
+        书名:<input type="text" name="bookName"/>
+        <button id="btn">查询</button>
+    </div>
+    <div id="main">
+        书籍内容
+    </div>
+</body>
+</html>
+
+
+
+
+		

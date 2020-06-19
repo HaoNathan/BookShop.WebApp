@@ -1,8 +1,215 @@
 ﻿
-@{
-    ViewBag.Title = "UserList";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutMain.cshtml";
+<h2>用户列表</h2>
+<div class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="userName"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">电话号码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="userPhone" placeholder="请输入电话号码" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-inline">
+            <input type="text" name="userEmail"  placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+        </div>
+        <button class="layui-btn" id="btnSearch"><i class="layui-icon layui-icon-search"></i> 查询</button>
+        <button class="layui-btn" id="btnInsert"><i class="layui-icon layui-icon-add-circle"></i> 新增</button>
+    </div>
+
+        
+</div>
+<table id="userTable" lay-filter="userInfoList"></table>
+@section js
+{
+
+    <script>
+        layui.use(['table', 'jquery', 'layer', 'form', 'request'],
+            function() {
+                var table = layui.table;
+                $ = layui.$;
+                var form = layui.form;
+                var layer = layui.layer;
+                var request = layui.request;
+                //第一个实例
+                table.render({
+                    elem: '#userTable',
+                    url: '@Url.Action("GetUserList", "UserManager")' //数据接口
+                    ,
+                    page: true //开启分页
+                    ,
+                    parseData: function(res) { //res 即为原始返回的数据
+                        return {
+                            "code": 0, //解析接口状态
+                            "msg": "", //解析提示文本
+                            "count": res.Info, //解析数据长度
+                            "data": res.Data //解析数据列表
+                        };
+                    },
+                    cols: [
+                        [//表头
+                            { field: 'LoginId', title: '账号', width: '14%', sort: true },
+                            { field: 'Name', title: '用户名', width: '14%' },
+                            { field: 'Mail', title: '邮箱', width: '14%', sort: true },
+                            { field: 'Address', title: '住址', width: '14%', sort: true },
+                            { field: 'Phone', title: '电话', width: '14%', sort: true },
+                            { field: 'userStateName', title: '状态', templet: '#switchTpl', width: '14%' },
+                            { field: 'userStateName', title: '状态', templet: '#barDemo', width: '14%' }
+                        ]
+                    ],
+                    limits: [8, 16, 24],
+                    toolbar: true
+
+                });
+                //监听操作
+                form.on('switch(stateDemo)',
+                    function(obj) {
+                        var stateId = 1;
+                        var loginId = this.value;
+                        if (obj.elem.checked === false) {
+                            stateId = 2;
+                        }
+                        request.ajaxRequest('@Url.Action("UpdateUserState", "UserManager")',
+                            { loginId: loginId, stateId: stateId },
+                            function (data) {
+                                refreshTable();
+                            }
+                        );
+
+                        @*$.ajax({
+                            url: '@Url.Action("UpdateUserState", "UserManager")',
+                            type: "post",
+                            data: { loginId: loginId, stateId: stateId },
+                            beforeSend: function() {
+                                // loadIndex = layer.load(1);
+                            },
+                            error: function() {
+                                layer.msg("error");
+                            },
+                            success: function(data) {
+                                if (data.IsSuccess) {
+                                    // layer.msg(data.Info);
+                                    refreshTable();
+                                }
+                            },
+                            complete: function() {
+                                //   layer.close(loadIndex);
+                            }
+                        });*@
+
+                    });
+
+                $("#btnSearch").click(function() {
+                    var name = $("input[name='userName']").val();
+                    var phone = $("input[name='userPhone']").val();
+                    var email = $("input[name='userEmail']").val();
+                    table.reload("userTable",
+                        {
+                            where: {
+                                userName: name,
+                                userPhone: phone,
+                                userEmail: email
+                            }
+
+                        });
+                });
+                $("#btnInsert").click(function() {
+                    layer = self === parent ? self : top.layui.layer;
+                    layer.open({
+                        type: 2,
+                        title: '用户新增页',
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['680px', '50%'],
+                        content: '@Url.Action("Add", "UserManager")' //iframe的url
+                    });
+                });
+                //刷新table
+                window.refreshTable = function() {
+                    table.reload("userTable",
+                        {});
+                };
+
+                //监听工具条
+                table.on('tool(userInfoList)',
+                    function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                        layer = self === parent ? self : top.layui.layer;
+                        var data = obj.data; //获得当前行数据
+                        var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                        var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+                        if (layEvent === 'detail') { //查看
+                            layer.open({
+                                type: 2,
+                                title: '用户详情页',
+                                shadeClose: true,
+                                shade: 0.8,
+                                area: ['680px', '50%'],
+                                content: '/Admin/UserManager/Detail?loginId=' + data.LoginId //iframe的url
+                            });
+                        } else if (layEvent === 'del') { //删除
+                            layer.confirm('真的删除行么',
+                                function(index) {
+                                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                    request.ajaxRequest("@Url.Action("Delete", "UserManager")",
+                                        { loginId: data.LoginId },
+                                        function(data) {
+                                            layer.msg("删除成功");
+                                        });
+                                    @*$.ajax({
+                                        url: "@Url.Action("Delete", "UserManager")",
+                                        type: "post",
+                                        data: { loginId: data.LoginId },
+                                        beforeSend: function() {
+                                            // loadIndex = layer.load(1);
+                                        },
+                                        error: function() {
+                                            layer.msg("error");
+                                        },
+                                        success: function(data) {
+                                            if (data.IsSuccess) {
+                                                // layer.msg(data.Info);
+                                                refreshTable();
+                                            }
+                                        },
+                                        complete: function() {
+                                            //   layer.close(loadIndex);
+                                        }
+                                    });*@
+                                    layer.close(index);
+
+                                    //向服务端发送删除指令
+                                });
+                        } else if (layEvent === 'edit') { //编辑
+                            layer.open({
+                                type: 2,
+                                title: '用户修改页',
+                                shadeClose: true,
+                                shade: 0.8,
+                                area: ['680px', '50%'],
+                                content: '/Admin/UserManager/UpdateUser?loginId=' + data.LoginId //iframe的url
+                            });
+                            //同步更新缓存对应的值
+                            //obj.update({
+                            //    username: '123',
+                            //    title: 'xxx'
+                            //});
+                        } else if (layEvent === 'LAYTABLE_TIPS') {
+                            layer.alert('Hi，头部工具栏扩展的右侧图标。');
+                        }
+                    });
+            });
+
+    </script>
+
+    <script type="text/html" id="switchTpl">
+        <input type="checkbox" name="StateName" value="{{d.LoginId}}" lay-skin="switch" lay-text="正常|注销" lay-filter="stateDemo" {{ d.userStateName== 1 ? 'checked' : '' }}>
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+
 }
-
-<h2>UserList</h2>
-

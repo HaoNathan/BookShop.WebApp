@@ -23,21 +23,54 @@ namespace BookShopBLL
 {
     public class UserManager:IUserManager
     {
+        private IUserServer _server;
+
+        public UserManager(IUserServer server)
+        {
+            _server = server;
+        }
         public  async Task<bool> Login(string userName, string userPwd)
         {
-            using (IUserServer userServer=new UserServer())
-            {
-                return await userServer.QueryAll().AnyAsync(m => m.LoginId == userName && m.LoginPwd == userPwd);
-            }
+                return await _server.QueryAll().AnyAsync(m => m.LoginId == userName && m.LoginPwd == userPwd);
         }
 
         public async Task<int> Register(Users user)
         {
+                return await _server.InsertAsync(user);
+        }
 
-            using (IUserServer userServer=new UserServer())
-            {
-                return await userServer.InsertAsync(user);
-            }
+        public async Task<List<Users>> GetAllUser()
+        {
+            return await _server.QueryAll().ToListAsync();
+        }
+
+        public async Task<Users> QueryUserByName(string name)
+        {
+            var data = await _server.QueryAll().ToListAsync();
+            return data.Find(m => m.LoginId.Equals(name));
+        }
+
+        public async Task<int> UpdateUserState(string name,int state)
+        {
+            var user = await QueryUserByName(name);
+            user.UserStateId = state;
+            return await _server.UpdateAsync(user);
+        }
+
+        public async Task<int> UpdateUser(Users user)
+        {
+            return await _server.UpdateAsync(user);
+        }
+
+        public async Task<int> DeleteUser(string name)
+        {
+            var user = await _server.QueryAsync(m => m.LoginId.Equals(name));
+            return await _server.DeleteAsync(user);
+        }
+
+        public async Task<int> InsertUser(Users user)
+        {
+            return await _server.InsertAsync(user);
         }
     }
 }

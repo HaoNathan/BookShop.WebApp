@@ -19,5 +19,11 @@ namespace BookShopIBLL
     {
         Task<bool>  Login(string userName,string userPwd);
         Task<int> Register(Users user);
+        Task<List<Users>> GetAllUser();
+        Task<Users> QueryUserByName(string name);
+        Task<int> UpdateUserState(string name,int state);
+        Task<int> UpdateUser(Users user);
+        Task<int> DeleteUser(string name);
+        Task<int> InsertUser(Users user);
     }
 }

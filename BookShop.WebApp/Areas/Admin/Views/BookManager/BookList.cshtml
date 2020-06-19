@@ -8,14 +8,14 @@
 
 @section js
 {
-    @*<script>
+    <script>
         layui.use('table', function(){
             var table = layui.table;
   
             //第一个实例
             table.render({
                 elem: '#BookTable'
-                ,height: 312
+
                 ,url: '@Html.Action("BookList","BookManager")' //数据接口
                 ,page: true //开启分页
                 ,cols: [[ //表头
@@ -35,7 +35,7 @@
             });
   
         });
-    </script>*@
+    </script>
 
 }
 

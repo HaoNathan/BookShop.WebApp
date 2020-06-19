@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using BookShopMODEL;
@@ -25,5 +26,6 @@ namespace BookShopIDAL
         Task<int> DeleteAsync(int no);
         Task<T> QueryAsync(int no);
         IQueryable<T> QueryAll();
+        Task<T> QueryAsync(Expression<Func<T,bool>>lambdaFunc);
     }
 }

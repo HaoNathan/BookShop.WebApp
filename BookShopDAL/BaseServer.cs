@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using  BookShopIDAL;
@@ -55,6 +56,11 @@ namespace BookShopDAL
         public IQueryable<T> QueryAll()
         {
             return _context.Set<T>().AsNoTracking();
+        }
+
+        public async  Task<T> QueryAsync(Expression<Func<T, bool>> lambdaFunc)
+        {
+            return await _context.Set<T>().Where(lambdaFunc).FirstOrDefaultAsync();
         }
 
         public void Dispose()

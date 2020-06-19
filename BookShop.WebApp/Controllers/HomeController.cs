@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using BookShop.WebApp.Models;
 using BookShop.WebApp.Models.UserViewModels;
 using BookShopBLL;
+using BookShopIBLL;
 using BookShopMODEL;
 using  BookShopTOOL;
 
@@ -14,7 +15,12 @@ namespace BookShop.WebApp.Controllers
 {
     public class HomeController : Controller
     {
+        private IUserManager _manager;
 
+        public HomeController(IUserManager manager)
+        {
+            _manager = manager;
+        }
         [HttpGet]
         public ActionResult index()
         {
@@ -30,7 +36,7 @@ namespace BookShop.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (await new UserManager().Login(models.UserName, models.UserPwd))
+                if (await _manager.Login(models.UserName, models.UserPwd))
                 {
                     Session["UserName"] = models.UserName;
                     return RedirectToAction("index", "Home");
@@ -75,7 +81,7 @@ namespace BookShop.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                int result = await new UserManager().Register(new Users()
+                int result = await _manager.Register(new Users()
                 {
                     LoginId = models.UserName,
                     Name = models.Name,
