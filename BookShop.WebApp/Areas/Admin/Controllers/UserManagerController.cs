@@ -30,8 +30,7 @@ namespace BookShop.WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetUserList(int page, int limit, string userName, string userPhone,
-            string userEmail)
+        public async Task<ActionResult> GetUserList(int page, int limit, string userName, string userPhone, string userEmail)
         {
             var list = await _manager.GetAllUser();
             if (!string.IsNullOrEmpty(userName))

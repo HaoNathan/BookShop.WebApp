@@ -31,9 +31,7 @@ namespace BookShopBLL
         }
         public async Task<List<Books>> GetAllBook()
         {
-           
                 return await _server.QueryAll().ToListAsync();
-            
         }
 
         public async Task<List<BooksDto>> QueryBooks(string name)
@@ -45,6 +43,14 @@ namespace BookShopBLL
 
                 }).ToListAsync();
             
+        }
+
+        public async  Task<List<Categories>> GetAllCategory()
+        {
+            using (IBookCategoryServer server=new BookCategoryServer())
+            {
+                return await  server.QueryAll().ToListAsync();
+            }
         }
     }
 }

@@ -22,5 +22,6 @@ namespace BookShopIBLL
     {
         Task<List<Books>> GetAllBook();
         Task<List<BooksDto>> QueryBooks(string name);
+        Task<List<Categories>> GetAllCategory();
     }
 }

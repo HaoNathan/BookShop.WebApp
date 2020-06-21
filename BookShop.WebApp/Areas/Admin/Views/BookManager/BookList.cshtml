@@ -1,40 +1,168 @@
-﻿
-@{
-    ViewBag.Title = "BookList";
-}
-
+﻿@using System.Web.UI.WebControls
 <h2>书籍列表</h2>
-<table id="BookTable" lay-filter="test"></table>
+<div class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="bookName" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-inline">
+            <input type="text" name="author" placeholder="请输入电话号码" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">单行选择框</label>
+        <div class="layui-input-inline">
+            @Html.DropDownList("CategoryId", (SelectList)ViewBag.CategoryName,"请选择")
+        </div>
+        <button class="layui-btn" id="btnSearch"><i class="layui-icon layui-icon-search"></i> 查询</button>
+        <button class="layui-btn" id="btnInsert"><i class="layui-icon layui-icon-add-circle"></i> 新增</button>
+    </div>
+  
+</div>
+<table id="BookTable" lay-filter="BookInfoList"></table>
 
 @section js
 {
     <script>
-        layui.use('table', function(){
-            var table = layui.table;
-  
-            //第一个实例
-            table.render({
-                elem: '#BookTable'
+        layui.use(['table', 'jquery', 'layer', 'form', 'request'],
+            function() {
+                var table = layui.table;
+                $ = layui.$;
+                var form = layui.form;
+                var layer = layui.layer;
+                var request = layui.request;
+                //第一个实例
+                table.render({
+                    elem: '#BookTable',
+                    url: '@Url.Action("GetBookList", "BookManager")' //数据接口
+                    ,
+                    page: true //开启分页
+                    ,
+                    parseData: function(res) { //res 即为原始返回的数据
+                        return {
+                            "code": 0, //解析接口状态
+                            "msg": "", //解析提示文本
+                            "count": res.Info, //解析数据长度
+                            "data": res.Data //解析数据列表
+                        };
+                    },
+                    cols: [
+                        [//表头
+                            {
+                                title: '封面',
+                                align: 'center',
+                                width: '8%',
+                                templet: '<div><img src="/Areas/Admin/Asset/BookCovers/{{d.ISBN}}.jpg" height="100%"></div>'
+                            },
+                            { field: 'id', title: 'ID', width: '10', hide: true, sort: true },
+                            { field: 'Title', title: '书名', width: '14%' },
+                            { field: 'Author', title: '作者', width: '12%', sort: true },
+                            { title: '上架时间', width: '12%', templet: "#newDate",width:"8%" },
+                            { field: 'ISBN', title: 'ISBN编号', width: '12%', sort: true },
+                            { field: 'UnitPrice', title: '定价', width: '5%', sort: true },
+                            { field: 'publishName', title: '出版社', width: '10%', sort: true },
+                            { field: 'categoryName', title: '类别', width: '10%', sort: true },
+                            { field: 'userStateName', title: '状态', templet: '#barDemo', width: '14%' }
+                        ]
+                    ],
+                    limits: [8, 16, 24],
+                    toolbar: true
 
-                ,url: '@Html.Action("BookList","BookManager")' //数据接口
-                ,page: true //开启分页
-                ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
-                    ,{field: 'Title', title: '书名', width:80}
-                    , { field: 'Author', title: '作者', width:80, sort: true}
-                    , { field: 'PublisherId', title: '上架编号', width:80} 
-                    , { field: 'PublishDate', title: '上架时间', width: 177}
-                    , { field: 'ISBN', title: 'ISBN编号', width: 80, sort: true}
-                    , { field: 'UnitPrice', title: '定价', width: 80, sort: true}
-                    , { field: 'ContentDescription', title: '描述', width: 80}
-                    , { field: 'TOC', title: '书籍目录', width: 135, sort: true }
-                    , { field: 'CategoryId', title: '类别', width: 135, sort: true }
-                    , { field: 'Clicks', title: '点击次数', width: 135, sort: true }
+                });
+         
+               
+                $("#btnSearch").click(function() {
+                    var name = $("input[name='bookName']").val();
+                    var author = $("input[name='author']").val();
+                    var category = $("select[name='CategoryId']").val();
+                    table.reload("BookTable",
+                        {
+                            where: {
+                                bookTitle: name,
+                                author: author,
+                                categoryId: category
+                            }
 
-                ]]
+                        });
+                });
+                $("#btnInsert").click(function() {
+                    layer = self === parent ? self : top.layui.layer;
+                    layer.open({
+                        type: 2,
+                        title: '新增书籍页',
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['680px', '50%'],
+                        content: '@Url.Action("Add", "UserManager")' //iframe的url
+                    });
+                });
+                //刷新table
+                window.refreshTable = function() {
+                    table.reload("BookTable",
+                        {});
+                };
+
+                //监听工具条
+                table.on('tool(BookInfoList)',
+                    function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                        layer = self === parent ? self : top.layui.layer;
+                        var data = obj.data; //获得当前行数据
+                        var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                        var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+                        if (layEvent === 'detail') { //查看
+                            layer.open({
+                                type: 2,
+                                title: '用户详情页',
+                                shadeClose: true,
+                                shade: 0.8,
+                                area: ['680px', '50%'],
+                                content: '/Admin/UserManager/Detail?loginId=' + data.LoginId //iframe的url
+                            });
+                        } else if (layEvent === 'del') { //删除
+                            layer.confirm('真的删除行么',
+                                function(index) {
+                                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                    request.ajaxRequest("@Url.Action("Delete", "UserManager")",
+                                        { loginId: data.LoginId },
+                                        function(data) {
+                                            layer.msg("删除成功");
+                                        });
+                                    
+                                    layer.close(index);
+
+                                    //向服务端发送删除指令
+                                });
+                        } else if (layEvent === 'edit') { //编辑
+                            layer.open({
+                                type: 2,
+                                title: '用户修改页',
+                                shadeClose: true,
+                                shade: 0.8,
+                                area: ['680px', '50%'],
+                                content: '/Admin/UserManager/UpdateUser?loginId=' + data.LoginId //iframe的url
+                            });
+                            //同步更新缓存对应的值
+                            //obj.update({
+                            //    username: '123',
+                            //    title: 'xxx'
+                            //});
+                        } else if (layEvent === 'LAYTABLE_TIPS') {
+                            layer.alert('Hi，头部工具栏扩展的右侧图标。');
+                        }
+                    });
             });
-  
-        });
+
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+    <script type="text/html" id="newDate">
+        {{# var date=parseInt( d.PublishDate.replace("/Date(","").replace(")/",""));}}
+        {{# var newTime=(new Date(date)).toLocaleDateString(); }}
+        <div class="layui-table-cell">{{newTime}}</div>
     </script>
 
 }

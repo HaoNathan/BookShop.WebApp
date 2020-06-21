@@ -149,6 +149,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\MainController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManagerController.cs" />
+    <Compile Include="Areas\Admin\Models\BookViewModel\BookViewModel.cs" />
     <Compile Include="Areas\Admin\Models\UserViewModel\UserListViewModel.cs" />
     <Compile Include="Controllers\BookCategoryController.cs" />
     <Compile Include="Controllers\BookController.cs" />
@@ -1305,10 +1306,10 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Main\Main.cshtml" />
-    <Content Include="Areas\Admin\Views\BookManager\BookList.cshtml" />
     <Content Include="Areas\Admin\Views\UserManager\Add.cshtml" />
     <Content Include="Areas\Admin\Views\UserManager\UpdateUser.cshtml" />
     <Content Include="Areas\Admin\Views\UserManager\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\BookManager\BookList.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
