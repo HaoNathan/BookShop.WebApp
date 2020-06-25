@@ -70,7 +70,7 @@ namespace BookShopDAL
 
         public async Task<int> DeleteAsync(int no)
         {
-            var model = _context.Set<T>().FindAsync(no);
+            var model =await _context.Set<T>().FindAsync(no);
             _context.Entry(model).State = EntityState.Deleted;
             return await _context.SaveChangesAsync();
         }

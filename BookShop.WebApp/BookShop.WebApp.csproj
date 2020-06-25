@@ -148,6 +148,7 @@
     <Compile Include="Areas\Admin\Controllers\BookManagerController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\MainController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManagerController.cs" />
     <Compile Include="Areas\Admin\Models\BookViewModel\BookViewModel.cs" />
     <Compile Include="Areas\Admin\Models\UserViewModel\UserListViewModel.cs" />
@@ -1094,6 +1095,7 @@
     <Content Include="Areas\Admin\Asset\BookCovers\9787900635624.jpg" />
     <Content Include="Areas\Admin\Asset\BookCovers\9787900641717.jpg" />
     <Content Include="Areas\Admin\Asset\BookCovers\bjjj.txt" />
+    <Content Include="Areas\Admin\Asset\BookCovers\img.png" />
     <Content Include="Areas\Admin\Asset\layui\css\layui.css" />
     <Content Include="Areas\Admin\Asset\layui\css\layui.mobile.css" />
     <Content Include="Areas\Admin\Asset\layui\css\modules\code.css" />
@@ -1200,6 +1202,7 @@
     <Content Include="Areas\Admin\Asset\layui\lay\modules\upload.js" />
     <Content Include="Areas\Admin\Asset\layui\lay\modules\util.js" />
     <Content Include="Areas\Admin\Asset\layui\request.js" />
+    <Content Include="Areas\Admin\Asset\layui\unobtrusive.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1310,6 +1313,8 @@
     <Content Include="Areas\Admin\Views\UserManager\UpdateUser.cshtml" />
     <Content Include="Areas\Admin\Views\UserManager\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\BookManager\BookList.cshtml" />
+    <Content Include="Areas\Admin\Views\BookManager\AddBook.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1341,6 +1346,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Asset\DetailImage\" />
     <Folder Include="Views\BookCategory\" />
   </ItemGroup>
   <ItemGroup>

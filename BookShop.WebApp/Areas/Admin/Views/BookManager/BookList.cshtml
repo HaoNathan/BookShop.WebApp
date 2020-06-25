@@ -1,5 +1,4 @@
-﻿@using System.Web.UI.WebControls
-<h2>书籍列表</h2>
+﻿<h2>书籍列表</h2>
 <div class="layui-form">
     <div class="layui-form-item">
         <label class="layui-form-label">名称</label>
@@ -54,7 +53,7 @@
                                 width: '8%',
                                 templet: '<div><img src="/Areas/Admin/Asset/BookCovers/{{d.ISBN}}.jpg" height="100%"></div>'
                             },
-                            { field: 'id', title: 'ID', width: '10', hide: true, sort: true },
+                            { field: 'Id', title: 'ID', width: '10', hide: true, sort: true },
                             { field: 'Title', title: '书名', width: '14%' },
                             { field: 'Author', title: '作者', width: '12%', sort: true },
                             { title: '上架时间', width: '12%', templet: "#newDate",width:"8%" },
@@ -92,8 +91,8 @@
                         title: '新增书籍页',
                         shadeClose: true,
                         shade: 0.8,
-                        area: ['680px', '50%'],
-                        content: '@Url.Action("Add", "UserManager")' //iframe的url
+                        area: ['780px', '70%'],
+                        content: '@Url.Action("AddBook", "BookManager")' //iframe的url
                     });
                 });
                 //刷新table
@@ -123,14 +122,12 @@
                             layer.confirm('真的删除行么',
                                 function(index) {
                                     obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                                    request.ajaxRequest("@Url.Action("Delete", "UserManager")",
-                                        { loginId: data.LoginId },
+                                    request.ajaxRequest("@Url.Action("DeleteBook", "BookManager")",
+                                        { id: data.Id },
                                         function(data) {
                                             layer.msg("删除成功");
                                         });
-                                    
-                                    layer.close(index);
-
+                                    layer.close(index); 
                                     //向服务端发送删除指令
                                 });
                         } else if (layEvent === 'edit') { //编辑

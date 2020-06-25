@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BaseServer.cs" />
     <Compile Include="BookCategoryServer.cs" />
+    <Compile Include="BookPublisherServer.cs" />
     <Compile Include="BookServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserServer.cs" />

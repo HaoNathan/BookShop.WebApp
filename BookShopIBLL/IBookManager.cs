@@ -23,5 +23,9 @@ namespace BookShopIBLL
         Task<List<Books>> GetAllBook();
         Task<List<BooksDto>> QueryBooks(string name);
         Task<List<Categories>> GetAllCategory();
+        Task<List<Publishers>> GetAllPublisher();
+        Task<int> InsertBook(Books model);
+        Task<int> DeleteBook(string id);
+
     }
 }

@@ -52,5 +52,22 @@ namespace BookShopBLL
                 return await  server.QueryAll().ToListAsync();
             }
         }
+        public async Task<List<Publishers>> GetAllPublisher()
+        {
+            using (IBookPublisherServer server = new BookPublisherServer())
+            {
+                return await server.QueryAll().ToListAsync();
+            }
+        }
+
+        public async Task<int> InsertBook(Books model)
+        {
+            return await _server.InsertAsync(model);
+        }
+
+        public async Task<int> DeleteBook(string id)
+        {
+            return await _server.DeleteAsync(int.Parse(id));
+        }
     }
 }

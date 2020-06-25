@@ -1,0 +1,237 @@
+﻿@using System.Activities.Expressions
+@model BookShop.WebApp.Areas.Admin.Models.BookViewModel.BookViewModel
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2>书籍新增页面</h2>
+    </div>
+    <div class="layui-card-body">
+        @using (Ajax.BeginForm("AddBook", "BookManager", new AjaxOptions()
+        {
+            OnBegin = "OnAjaxBegin",
+            OnFailure = "OnAjaxFailure",
+            OnSuccess = "OnAjasmuccess",
+            OnComplete = "OnAjaxComplete"
+        }))
+        {
+            @Html.Hidden("imageUrl")
+            <div class="layui-form layui-form-pane ">
+                <div class="layui-row layui-col-space10">
+                    <div class="layui-col-sm6">
+                        <div class="layui-col-sm6">
+                            <img src="/Areas/Admin/Asset/BookCovers/img.png" id="displayImg" width="100%" />
+                        </div>
+                        <div class="layui-col-sm6">
+                            <button type="button" class="layui-btn layui-btn-sm" id="uploadImg" style="margin-top: 150px;margin-left: 20px">
+                                <i class="layui-icon layui-icon-upload-circle"></i>
+                                上传图片
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">书籍名称</div>
+                            <div class="layui-input-block">
+                                @Html.TextBoxFor(m => m.Title, new Dictionary<string, object>()
+                                {
+                                    {"lay-verify","required"},
+                                    {"class","layui-input"},
+                                    {" autocomplete","off"}
+                                })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-row layui-col-space10">
+                    <div class="layui-col-sm6">
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">ISBN</div>
+                            <div class="layui-input-block">
+                                @Html.TextBoxFor(m => m.ISBN, new Dictionary<string, object>()
+                                {
+                                    {"lay-verify","required"},
+                                    {"class","layui-input"},
+                                    {" autocomplete","off"}
+                                })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">作者</div>
+                            <div class="layui-input-block">
+                                @Html.TextBoxFor(m => m.Author, new Dictionary<string, object>()
+                                {
+                                    {"lay-verify","required"},
+                                    {"class","layui-input"},
+                                    {" autocomplete","off"}
+                                })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-row layui-col-space10">
+                    <div class="layui-col-sm6">
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">出版社</div>
+                            <div class="layui-input-block">
+                                @Html.DropDownList("PublisherId", (SelectList)ViewBag.PubulishNames, "请选择")
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">书籍类别</div>
+                            <div class="layui-input-block">
+                                @Html.DropDownList("CategoryId", (SelectList)ViewBag.CategoryNames, "请选择")
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-row layui-col-space10">
+                    <div class="layui-col-sm6">
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">出版日期</div>
+                            <div class="layui-input-block">
+                                @Html.TextBoxFor(m => m.PublishDate, new Dictionary<string, object>()
+                                {
+                                    {"lay-verify","required"},
+                                    {"class","layui-input"},
+                                    {" autocomplete","off"}
+                                })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">价格</div>
+                            <div class="layui-input-block">
+                                @Html.TextBoxFor(m => m.UnitPrice, new Dictionary<string, object>()
+                                {
+                                    {"lay-verify","required"},
+                                    {"class","layui-input"},
+                                    {" autocomplete","off"}
+                                })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-row layui-col-space10">
+                    <div class="layui-col-sm12">
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">书籍目录</div>
+                            <div class="layui-input-block">
+                                @Html.TextAreaFor(m => m.TOC)
+                               
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="layui-col-sm12">
+                        <div class="layui-form-item">
+                            <div class="layui-form-label">书籍描述</div>
+                            <div class="layui-input-block">
+                                @Html.TextAreaFor(m => m.ContentDescription)
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-col-sm5 layui-col-sm-offset7" style="margin-top: 30px">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-filter="addUser" type="submit" lay-submit><i class="layui-icon layui-icon-ok"></i> 添加</button>
+                        </div>
+                </div>
+
+            </div>
+        }
+
+    </div>
+</div>
+@section js
+{
+    <script>
+        layui.use(['jquery', 'layer', 'form', 'request','layedit', 'laydate','upload','unobtrusive'],
+            function() {
+                var layer = layui.layer;
+                var form = layui.form;
+                $ = layui.$;
+                var laydate = layui.laydate;
+                var request = layer.request;
+                var upload = layui.upload;
+                var layedit = layui.layedit;
+                layedit.set({
+                    uploadImage: {
+                        url: '@Url.Action("UploadDetailFile","BookManager")' //接口url
+                        ,type: 'post' //默认post
+                    }
+                });
+                layedit.build('TOC'); //建立编辑器
+                layedit.build('ContentDescription'); //建立编辑器
+
+                laydate.render({
+                    elem: '#PublishDate'
+                });
+                form.verify({
+                    title: function(value) {
+                        if (value.length < 5) {
+                            return '姓名至少得5个字符啊';
+                        }
+                    },
+                    select: function (value) {
+                        if (value==="请选择") {
+                            return '未选择';
+                        }
+                    }
+                });
+                //普通图片上传
+                upload.render({
+                    elem: '#uploadImg'
+                    ,url: '@Url.Action("UploadFile","BookManager")' //改成您自己的上传接口
+                    ,field:'file'
+                    ,done: function(res){
+                        //如果上传失败
+                        if(res.code > 0){
+                            return layer.msg('上传失败');
+                        } else {
+                            $("#displayImg").attr("src", res.data);
+                            layer.msg("上传成功");
+                            $("#imageUrl").val(res.data);
+
+                        }
+                        //上传成功
+                    }
+                    ,error: function(){
+                        //演示失败状态，并实现重传
+                        layer.msg("error");
+                    }
+                });
+                window.OnAjasmuccess=function(res) {
+                    layer.msg(res.Info);
+                }
+                function closeIframe() {
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                }
+
+                $("#btnExit").click(function() {
+                    closeIframe();
+                });
+
+            });
+
+
+    </script>
+}
+
+
+
