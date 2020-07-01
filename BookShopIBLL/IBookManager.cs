@@ -26,6 +26,6 @@ namespace BookShopIBLL
         Task<List<Publishers>> GetAllPublisher();
         Task<int> InsertBook(Books model);
         Task<int> DeleteBook(string id);
-
+        Task <List<Orders>> GetAllOrder();
     }
 }

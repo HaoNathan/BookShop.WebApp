@@ -45,6 +45,7 @@
     <Compile Include="IBookCategoryServer.cs" />
     <Compile Include="IBookPublisherServer.cs" />
     <Compile Include="IBookServer.cs" />
+    <Compile Include="IOrderServer.cs" />
     <Compile Include="IUserServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

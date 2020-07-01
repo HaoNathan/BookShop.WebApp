@@ -37,5 +37,62 @@ namespace BookShop.WebApp.Areas.Admin.Controllers
 
             return Json(categoryGroup);
         }
+        public async Task<ActionResult> GetOrderGroupByDate(string beginDate,string endDate)
+        {
+            var orderList = await _manager.GetAllOrder();
+            var begin = Convert.ToDateTime(beginDate);
+            var end = Convert.ToDateTime(endDate);
+
+            var orderGroup = orderList.Where(m=>m.OrderDate>=begin&&m.OrderDate<=end)
+                .GroupBy(m => m.OrderDate.Month)
+                .Select(m => new
+            {
+                name = m.Key,
+                y = m.Count()
+            });
+
+            List<string>nameList=new List<string>();
+            List<int>countList=new List<int>();
+            Dictionary<string,object> dic=new Dictionary<string, object>();
+
+            foreach (var item in orderGroup)
+            {
+                nameList.Add(item.name+"月");
+                countList.Add(item.y);
+            }
+            dic.Add("list1",nameList);
+            dic.Add("list2", countList);
+
+            return Json(dic);
+        }
+        public async Task<ActionResult> GetOrderGroupByDate()
+        {
+            var orderList = await _manager.GetAllOrder();
+            //var begin = Convert.ToDateTime(beginDate);
+            //var end = Convert.ToDateTime(endDate);
+
+            //var orderGroup = orderList.Where(m => m.OrderDate >= begin && m.OrderDate <= end)
+            //    .GroupBy(m => m.OrderDate.Month)
+            //    .Select(m => new
+            //    {
+            //        name = m.Key,
+            //        y = m.Count()
+            //    });
+
+            //List<string> nameList = new List<string>();
+            //List<int> countList = new List<int>();
+            //Dictionary<string, object> dic = new Dictionary<string, object>();
+
+            //foreach (var item in orderGroup)
+            //{
+            //    nameList.Add(item.name + "月");
+            //    countList.Add(item.y);
+            //}
+            //dic.Add("list1", nameList);
+            //dic.Add("list2", countList);
+
+            return Json(null);
+        }
+
     }
 }

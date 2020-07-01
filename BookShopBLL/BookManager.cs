@@ -69,5 +69,13 @@ namespace BookShopBLL
         {
             return await _server.DeleteAsync(int.Parse(id));
         }
+
+        public async Task<List<Orders>> GetAllOrder()
+        {
+            using (IOrderServer server=new OrderServer())
+            {
+                return await server.QueryAll().ToListAsync();
+            }
+        }
     }
 }
